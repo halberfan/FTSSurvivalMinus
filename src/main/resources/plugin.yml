@@ -1,0 +1,9 @@
+name: SurvivalMinus
+version: 0.1
+main: de.ftscraft.survivalminus.main.Survival
+author: halberfan
+depend: [mcMMO]
+
+commands:
+    gesundheit:
+    chooseability:
