@@ -15,6 +15,8 @@ public class UserIO {
     private File folder;
 
     private Survival plugin;
+    private int interactionToValueDown = 50;
+    private long firstPlayed;
 
     public UserIO(Survival plugin) {
         this.plugin = plugin;
@@ -30,6 +32,7 @@ public class UserIO {
         if (!userFile.exists()) {
             try {
                 cfg.save(userFile);
+                return;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -40,24 +43,32 @@ public class UserIO {
                 mood = cfg.getInt("health.mood"),
                 kohlenhydrate = cfg.getInt("health.kohlenhydrate"),
                 protein = cfg.getInt("health.protein"),
-                sugar = cfg.getInt("health.sugar"),
                 salt = cfg.getInt("health.salt"),
                 fat = cfg.getInt("health.fat");
 
+        long firstPlayed;
+        if (cfg.contains("player.firstTimePlayed"))
+            firstPlayed = cfg.getLong("player.firstTimePlayed");
+        else {
+            user.setFirstTimePlayed(System.currentTimeMillis());
+            firstPlayed = 0;
+        }
+
         List typeList = cfg.getList("skills");
         String[] types = null;
-        if(typeList != null)
+        if (typeList != null)
             types = (String[]) typeList.toArray(new String[typeList.size()]);
 
         user.setThirst(thirst);
         user.setFatigue(fatigue);
         user.setMood(mood);
-        user.setKohlenhydrathe(kohlenhydrate);
+        user.setKohlenhydrate(kohlenhydrate);
         user.setProteine(protein);
-        user.setSuager(sugar);
         user.setSalt(salt);
         user.setFat(fat);
-        if(types != null)
+        if (firstPlayed != 0)
+            user.setFirstTimePlayed(firstPlayed);
+        if (types != null)
             user.setSkills(types);
     }
 
@@ -69,17 +80,19 @@ public class UserIO {
         cfg.set("health.thirst", user.getThirst());
         cfg.set("health.fatigue", user.getFatigue());
         cfg.set("health.mood", user.getMood());
-        cfg.set("health.kohlenhydrate", user.getKohlenhydrathe());
+        cfg.set("health.kohlenhydrate", user.getKohlenhydrate());
         cfg.set("health.protein", user.getProteine());
-        cfg.set("health.sugar", user.getSuager());
         cfg.set("health.salt", user.getSalt());
         cfg.set("health.fat", user.getFat());
 
+        cfg.set("player.firstTimePlayed", user.getFirstTimePlayed());
+
         List<String> b = new ArrayList<>();
 
-        for (SkillType a : user.getAbility().values()) {
-            b.add(a.getName());
-        }
+        if (!user.getAbility().values().isEmpty())
+            for (SkillType a : user.getAbility().values()) {
+                b.add(a.getName());
+            }
 
         cfg.set("skills", b.toArray());
 

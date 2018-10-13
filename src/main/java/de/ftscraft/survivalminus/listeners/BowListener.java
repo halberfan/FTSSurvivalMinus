@@ -25,10 +25,14 @@ public class BowListener implements Listener {
 
             PlayerInventory inv = p.getInventory();
 
-            if(inv.getItemInOffHand().getType() != Material.ARROW) {
+            if(inv.getItemInOffHand().getType() != Material.ARROW && inv.getItemInOffHand().getType() != Material.SPECTRAL_ARROW && inv.getItemInOffHand().getType() != Material.TIPPED_ARROW) {
                 event.getProjectile().remove();
 
                 p.sendMessage("§cDu musst den Pfeil in der Off-Hand haben!");
+            } else {
+
+                event.getProjectile().setCustomName("§cSplashArrow");
+
             }
 
         }

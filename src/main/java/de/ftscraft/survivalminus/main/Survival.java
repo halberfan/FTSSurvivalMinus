@@ -1,5 +1,6 @@
 package de.ftscraft.survivalminus.main;
 
+import com.gmail.nossr50.datatypes.skills.SkillType;
 import de.ftscraft.survivalminus.commands.CMDchooseability;
 import de.ftscraft.survivalminus.commands.CMDgesundheit;
 import de.ftscraft.survivalminus.listeners.*;
@@ -10,6 +11,7 @@ import de.ftscraft.survivalminus.utils.UserIO;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collection;
@@ -34,7 +36,6 @@ public class Survival extends JavaPlugin {
             u.getData();
         }
 
-
     }
 
     private void initCommands() {
@@ -58,10 +59,16 @@ public class Survival extends JavaPlugin {
         new EntityByEntityDamageListener(this);
         new PlayerJoinListener(this);
         new PlayerQuitListener(this);
-        new PlayerInteractListener(this);
+        //new PlayerInteractListener(this);
         new PlayerDrinkListener(this);
         new BowListener(this);
         new McMMOListener(this);
+        new PlayerDoThingsListener(this);
+        new BlockLandListener(this);
+        new ArrowLandListener(this);
+        new PlayerMoveListener(this);
+        new DeadListener(this);
+        new PlayerCraftListener(this);
     }
 
     public User getUser(String name) {

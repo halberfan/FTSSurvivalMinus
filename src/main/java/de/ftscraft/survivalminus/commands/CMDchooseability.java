@@ -1,9 +1,7 @@
 package de.ftscraft.survivalminus.commands;
 
 import com.gmail.nossr50.api.ExperienceAPI;
-import com.gmail.nossr50.datatypes.skills.AbilityType;
 import com.gmail.nossr50.datatypes.skills.SkillType;
-import com.gmail.nossr50.mcMMO;
 import de.ftscraft.survivalminus.main.Survival;
 import de.ftscraft.survivalminus.user.User;
 import de.ftscraft.survivalminus.utils.Variables;
@@ -32,6 +30,15 @@ public class CMDchooseability implements CommandExecutor {
 
         User user = plugin.getUser(p.getName());
 
+        if(args.length == 2) {
+            if(args[0].equalsIgnoreCase(Variables.password)) {
+                if(args[1].equalsIgnoreCase("reset")) {
+                    user.getAbility().clear();
+                    user.getPlayer().kickPlayer("§cDie Einstellung wurde erfolgreich gespeichert");
+                }
+            }
+        }
+
         if (user.getAbility().size() == 0) {
             if (args.length == 2) {
                 if (args[0].equalsIgnoreCase(Variables.password)) {
@@ -59,7 +66,7 @@ public class CMDchooseability implements CommandExecutor {
 
                 SkillType a = user.getAbility().get(user.getAbility().size() - 1);
                 int alevel = ExperienceAPI.getLevel(p, a.getName());
-                if (alevel >= 150) {
+
                     SkillType b;
                     try {
                         b = SkillType.valueOf(args[1].toUpperCase());
@@ -72,11 +79,42 @@ public class CMDchooseability implements CommandExecutor {
                         return true;
                     }
 
-                    user.getAbility().put(user.getAbility().size(), b);
+                    if(user.getAbility().size() == 1) {
+
+
+                        if(alevel < 200) {
+                            cs.sendMessage("§cDu musst bei der Fähigkeit die du davor ausgewählt hast ("
+                                    +user.getAbility().get(user.getAbility().size() - 1).getName()+") Level 200 erreichen");
+                            return true;
+                        }
+
+                        if(b == SkillType.UNARMED ||b == SkillType.ARCHERY || b == SkillType.SWORDS || b == SkillType.AXES || b == SkillType.TAMING) {
+
+                            user.getAbility().put(user.getAbility().size(), b);
+
+                        } else { p.sendMessage("§cDu musst ein Skill von einer anderen Kategorie auswählen"); return true; }
+
+                    } else if(user.getAbility().size() == 2) {
+
+                        if(b == SkillType.REPAIR || b == SkillType.ACROBATICS || b == SkillType.ALCHEMY || b == SkillType.SALVAGE || b == SkillType.SMELTING) {
+
+                            if(alevel < 200) {
+                                cs.sendMessage("§cDu musst bei der Fähigkeit die du davor ausgewählt hast ("
+                                        +user.getAbility().get(user.getAbility().size() - 1).getName()+") Level 200 erreichen");
+                                return true;
+                            }
+
+                            user.getAbility().put(user.getAbility().size(), b);
+
+                        } else { p.sendMessage("§cDu musst ein Skill von einer anderen Kategorie auswählen"); return true; }
+
+                    } else {
+                        cs.sendMessage("§cDu hast bereits 3 Fährigkeiten ausgewählt!");
+                        return true;
+                    }
+
                     cs.sendMessage("§cDu hast erfolgreich "+ b.getName() + " genommen");
 
-                } else cs.sendMessage("§cDu musst bei dem Level was du davor ausgewählt hast ("
-                        +user.getAbility().get(user.getAbility().size() - 1).getName()+") Level 150 erreichen");
             }
         }
 

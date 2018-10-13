@@ -2,6 +2,7 @@ name: SurvivalMinus
 version: 0.1
 main: de.ftscraft.survivalminus.main.Survival
 author: halberfan
+api-version: 1.13
 depend: [mcMMO]
 
 commands:

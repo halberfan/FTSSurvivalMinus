@@ -22,13 +22,15 @@ public class EntityByEntityDamageListener implements Listener {
 
     @EventHandler()
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        System.out.println(0);
         if ((event.getEntity() instanceof Player) && (event.getDamager() instanceof Player)) {
             Player a = (Player) event.getDamager();
+            if(a.getInventory().getItemInMainHand() == null || a.getInventory().getItemInMainHand().getType() == Material.AIR) {
+                return;
+            }
             if (a.getInventory().getItemInMainHand().getItemMeta().getDisplayName() == null) {
                 return;
             }
-            if (a.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase("§cShiv")) {
+            if (a.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase("§cDolch")) {
                 Vector attacker = event.getDamager().getLocation().getDirection();
                 Vector victim = event.getEntity().getLocation().getDirection();
                 //Hat er ihn nicht angeguckt
@@ -36,7 +38,7 @@ public class EntityByEntityDamageListener implements Listener {
                     //Von Hinten
                     event.setDamage(EntityDamageEvent.DamageModifier.ARMOR, event.getDamage(EntityDamageEvent.DamageModifier.ARMOR) + 2);
                 }
-                ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 2 * 20, 1));
+                //((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 2 * 20, 1));
             }
         }
     }
