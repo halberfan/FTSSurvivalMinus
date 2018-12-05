@@ -1,15 +1,13 @@
 package de.ftscraft.survivalminus.user;
 
-import com.gmail.nossr50.datatypes.skills.AbilityType;
 import com.gmail.nossr50.datatypes.skills.SkillType;
 import de.ftscraft.survivalminus.main.Survival;
 import de.ftscraft.survivalminus.utils.Food;
-import de.ftscraft.survivalminus.utils.Utils;
 import de.ftscraft.survivalminus.utils.Variables;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,18 +18,14 @@ public class User {
     private Survival plugin;
     private Player player;
 
-    private int thirst = Variables.MAX_THIRST,
-            fatigue = Variables.MAX_FATIGUE,
-            mood = Variables.MAX_MOOD;
+    private int thirst = Variables.MAX_THIRST;
 
     private int seconds_thirst = Variables.TIME_THIRST;
 
     private int
             kohlenhydrathe = Variables.MAX_KOHLENHYDRATHE,
             proteine = Variables.MAX_PROTEIN,
-            salt = Variables.MAX_SALT,
-            bodyFat = Variables.MAX_BODY_FAT,
-            fat = Variables.MAX_FAT;
+            vitamine = Variables.MAX_VITAMINE;
 
     private boolean kohlen_active = false,
                     protein_active = false,
@@ -69,9 +63,8 @@ public class User {
         this.seconds_thirst = seconds_thirst;
         if (seconds_thirst == 0) {
             thirst = thirst - 1;
-            fat = fat - 1;
             proteine = proteine - 1;
-            salt = salt - 1;
+            vitamine = vitamine - 1;
             kohlenhydrathe = kohlenhydrathe - 1;
             this.seconds_thirst = Variables.TIME_THIRST;
         }
@@ -91,40 +84,16 @@ public class User {
         return proteine;
     }
 
-    public int getFat() {
-        return fat;
-    }
-
-    public int getSalt() {
-        return salt;
+    public int getVitamine() {
+        return vitamine;
     }
 
     public HashMap<Integer, SkillType> getAbility() {
         return ability;
     }
 
-    public int getFatigue() {
-        return fatigue;
-    }
-
-    public int getMood() {
-        return mood;
-    }
-
     public UUID getUUID() {
         return player.getUniqueId();
-    }
-
-    public void setFatigue(int fatigue) {
-        this.fatigue = fatigue;
-        if(this.fatigue < 0)
-            this.fatigue = 0;
-    }
-
-    public void setMood(int mood) {
-        this.mood = mood;
-        if(this.mood < 0)
-            this.mood = 0;
     }
 
     public void setKohlenhydrate(int kohlenhydrathe) {
@@ -139,24 +108,10 @@ public class User {
             this.proteine = 0;
 }
 
-    public void setSalt(int salt) {
-        this.salt = salt;
-        if(this.salt < 0)
-            this.salt = 0;
-    }
-
-    public void setFat(int fat) {
-        this.fat = fat;
-        if(this.fat < 0)
-            this.fat = 0;
-    }
-
-    public int getBodyFat() {
-        return bodyFat;
-    }
-
-    public void setBodyFat(int bodyFat) {
-        this.bodyFat = bodyFat;
+    public void setVitamine(int salt) {
+        this.vitamine = salt;
+        if(this.vitamine < 0)
+            this.vitamine = 0;
     }
 
     public void remove() {
@@ -181,18 +136,6 @@ public class User {
                 return true;
         }
         return false;
-    }
-
-    public String getMoodLevel() {
-        if (Utils.isBetween(mood, 1, 20)) {
-            return "Sehr Unglücklich";
-        } else if (Utils.isBetween(mood, 21, 40)) {
-            return "Unglücklich";
-        } else if (Utils.isBetween(mood, 41, 60)) {
-            return "Glücklich";
-        } else if (Utils.isBetween(mood, 61, 81)) {
-            return "Sehe Glücklich";
-        } else return "Extrem Glücklich";
     }
 
     public void skillRemove(SkillType skill) {
@@ -224,8 +167,7 @@ public class User {
         int thirst = food.getDurst();
         int kohlenhydrate = food.getKohlenhydrate();
         int proteine = food.getProteine();
-        int salz = food.getSalz();
-        int fett = food.getFette();
+        int vitamine = food.getVitamine();
         //Set Durst
         if (getThirst() + thirst > Variables.MAX_THIRST) {
             setThirst(Variables.MAX_THIRST);
@@ -238,13 +180,25 @@ public class User {
         if (getProteine() + proteine > Variables.MAX_PROTEIN) {
             setProteine(Variables.MAX_PROTEIN);
         } else setProteine(getProteine() + proteine);
-        if (getSalt() + salz > Variables.MAX_SALT) {
-            setSalt(Variables.MAX_SALT);
-        } else setSalt(getSalt() + salz);
+        if (getVitamine() + vitamine > Variables.MAX_VITAMINE) {
+            setVitamine(Variables.MAX_VITAMINE);
+        } else setVitamine(getVitamine() + vitamine);
 
-        if (getFat() + fett > Variables.MAX_FAT) {
-            setFat(Variables.MAX_FAT);
-        } else setFat(getFat() + fett);
+        if(food.getMaterial() == Material.COOKIE) {
+            if(player.getWalkSpeed() == (float)0.2) {
+                player.setWalkSpeed((float) 0.3);
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    player.setWalkSpeed((float) 0.2);
+                }, 20 * 10);
+            }
+        } else if(food.getMaterial() == Material.CAKE) {
+            if(player.getWalkSpeed() == (float)0.2) {
+                player.setWalkSpeed((float) 0.35);
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    player.setWalkSpeed((float) 0.2);
+                }, 20 * 10);
+            }
+        }
 
     }
 
@@ -254,8 +208,7 @@ public class User {
             thirst -= 1;
             kohlenhydrathe -= 1;
             proteine -= 1;
-            salt -= 1;
-            fat -= 1;
+            vitamine -= 1;
             seconds_down = Variables.DOWN;
         }
     }
@@ -269,13 +222,8 @@ public class User {
                 return 2;
             else return 1;
         }
-        if(getFat() <= 5) {
-            if(getFat() == 0)
-                return 2;
-            else return 1;
-        }
-        if(getSalt() <= 5) {
-            if(getSalt() == 0)
+        if(getVitamine() <= 5) {
+            if(getVitamine() == 0)
                 return 2;
             else return 1;
         }
@@ -357,5 +305,13 @@ public class User {
                 setSalt_active(true);
         }
 
+    }
+
+    public void fillAll()
+    {
+        setVitamine(20);
+        setThirst(20);
+        setProteine(20);
+        setKohlenhydrate(20);
     }
 }

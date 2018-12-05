@@ -1,6 +1,6 @@
 package de.ftscraft.survivalminus.main;
 
-import com.gmail.nossr50.datatypes.skills.SkillType;
+import de.ftscraft.ftssystem.main.FtsSystem;
 import de.ftscraft.survivalminus.commands.CMDchooseability;
 import de.ftscraft.survivalminus.commands.CMDgesundheit;
 import de.ftscraft.survivalminus.listeners.*;
@@ -11,7 +11,6 @@ import de.ftscraft.survivalminus.utils.UserIO;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collection;
@@ -22,6 +21,8 @@ public class Survival extends JavaPlugin {
     private TreeMap<String, User> user;
 
     public ItemStacks itemStacks;
+
+    private FtsSystem fts;
 
     private UserIO userIO;
 
@@ -47,6 +48,7 @@ public class Survival extends JavaPlugin {
         userIO = new UserIO(this);
         user = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         itemStacks = new ItemStacks(this);
+        fts = (FtsSystem) Bukkit.getServer().getPluginManager().getPlugin("FTSSystem");
         new TaskScheduler(this);
     }
 
@@ -56,7 +58,6 @@ public class Survival extends JavaPlugin {
     }
 
     private void initListeners() {
-        new EntityByEntityDamageListener(this);
         new PlayerJoinListener(this);
         new PlayerQuitListener(this);
         //new PlayerInteractListener(this);
@@ -69,6 +70,8 @@ public class Survival extends JavaPlugin {
         new PlayerMoveListener(this);
         new DeadListener(this);
         new PlayerCraftListener(this);
+        new PlayerInteractListener(this);
+        new PlayerClickListener(this);
     }
 
     public User getUser(String name) {
@@ -93,5 +96,9 @@ public class Survival extends JavaPlugin {
 
     public void removeUser(String name) {
         this.user.remove(name);
+    }
+
+    public FtsSystem getFts() {
+        return fts;
     }
 }

@@ -27,8 +27,6 @@ public class TaskScheduler implements Runnable {
             for (User a : plugin.getAllUser()) {
                 a.setSeconds_thirst(a.getSeconds_thirst() - 1);
                 a.checkAciveValues();
-                a.setSalt(20);
-                a.setFat(20);
                 if(a.getPlayer().getGameMode() == GameMode.CREATIVE) {
                     a.setThirst(20);
                     a.setProteine(20);
@@ -55,7 +53,7 @@ public class TaskScheduler implements Runnable {
             if (p.getInventory().getChestplate() != null && p.getInventory().getChestplate().getType() != Material.AIR) {
                 if (p.getInventory().getChestplate().getItemMeta().getDisplayName() != null) {
                     if (p.getInventory().getChestplate().getItemMeta().getDisplayName().equalsIgnoreCase("§4Robe")) {
-                        p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 2 * 20, 1), true);
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 3 * 20, 2), true);
                     }
                 }
             }

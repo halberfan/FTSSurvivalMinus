@@ -39,12 +39,9 @@ public class UserIO {
         }
 
         int thirst = cfg.getInt("health.thirst"),
-                fatigue = cfg.getInt("health.fatigue"),
-                mood = cfg.getInt("health.mood"),
                 kohlenhydrate = cfg.getInt("health.kohlenhydrate"),
                 protein = cfg.getInt("health.protein"),
-                salt = cfg.getInt("health.salt"),
-                fat = cfg.getInt("health.fat");
+                vitamin = cfg.getInt("health.vitamin");
 
         long firstPlayed;
         if (cfg.contains("player.firstTimePlayed"))
@@ -60,12 +57,9 @@ public class UserIO {
             types = (String[]) typeList.toArray(new String[typeList.size()]);
 
         user.setThirst(thirst);
-        user.setFatigue(fatigue);
-        user.setMood(mood);
         user.setKohlenhydrate(kohlenhydrate);
         user.setProteine(protein);
-        user.setSalt(salt);
-        user.setFat(fat);
+        user.setVitamine(vitamin);
         if (firstPlayed != 0)
             user.setFirstTimePlayed(firstPlayed);
         if (types != null)
@@ -78,12 +72,9 @@ public class UserIO {
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(userFile);
 
         cfg.set("health.thirst", user.getThirst());
-        cfg.set("health.fatigue", user.getFatigue());
-        cfg.set("health.mood", user.getMood());
+        cfg.set("health.vitamin", user.getVitamine());
         cfg.set("health.kohlenhydrate", user.getKohlenhydrate());
         cfg.set("health.protein", user.getProteine());
-        cfg.set("health.salt", user.getSalt());
-        cfg.set("health.fat", user.getFat());
 
         cfg.set("player.firstTimePlayed", user.getFirstTimePlayed());
 

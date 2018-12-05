@@ -1,6 +1,7 @@
 package de.ftscraft.survivalminus.listeners;
 
 import de.ftscraft.survivalminus.main.Survival;
+import de.ftscraft.survivalminus.user.User;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,6 +22,8 @@ public class DeadListener implements Listener {
     public void onDeath(PlayerDeathEvent event) {
         Player killed = event.getEntity();
         Player killer = event.getEntity().getKiller();
+        if(killer == null)
+            return;
         if(killer.getInventory().getItemInMainHand() != null && killer.getInventory().getItemInMainHand().getType() != Material.AIR) {
             if(killer.getInventory().getItemInMainHand().getItemMeta().getDisplayName() != null) {
                 if(killer.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase("§cDolch")) {
@@ -28,6 +31,9 @@ public class DeadListener implements Listener {
                 }
             }
         }
+
+        User user = plugin.getUser(killed);
+        user.fillAll();
     }
 
 }

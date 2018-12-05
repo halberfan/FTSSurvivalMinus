@@ -4,18 +4,15 @@ public class Variables {
 
     public static final int
             MAX_THIRST = 20,
-            MAX_FATIGUE = 100,
-            MAX_MOOD = 100,
             MAX_KOHLENHYDRATHE = 20,
             MAX_PROTEIN = 20,
             MAX_FAT = 20,
-            MAX_BODY_FAT = 100,
-            MAX_SALT = 20;
+            MAX_VITAMINE = 20;
 
     //Durst, Ermüdigung, Gemütszustand, Kohlenhydrate, Proteine, Zucker, Fett, Salz
 
     public static final int TIME_THIRST = 60 * 9,
-    DOWN = 266;
+    DOWN = 1330;
 
     public static final int BOTTLE_THIRST = 3;
 

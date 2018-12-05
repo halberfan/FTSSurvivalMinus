@@ -2,40 +2,35 @@ package de.ftscraft.survivalminus.listeners;
 
 import de.ftscraft.survivalminus.main.Survival;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.material.Cauldron;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.material.MaterialData;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
-import org.bukkit.util.Vector;
 
-import java.util.Arrays;
+import java.util.Collection;
 
 public class PlayerInteractListener implements Listener {
 
     private Survival plugin;
 
-    public PlayerInteractListener(Survival plugin) {
+    public PlayerInteractListener(Survival plugin)
+    {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler
-    public void onInteract(final PlayerInteractEvent event) {
+    public void onInteract(final PlayerInteractEvent event)
+    {
         /*
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
@@ -85,7 +80,8 @@ public class PlayerInteractListener implements Listener {
                             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 7 * 20, 2));
                             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                                 @Override
-                                public void run() {
+                                public void run()
+                                {
                                     event.getPlayer().setHealth(20);
                                 }
                             }, 20 * 7);
@@ -96,6 +92,32 @@ public class PlayerInteractListener implements Listener {
                             fb.setVelocity(event.getPlayer().getLocation().getDirection().multiply(2));
                         }
 
+                    }
+                } else if (event.getItem().getType() == Material.GOLDEN_AXE) {
+                    if (event.getItem().getItemMeta().getDisplayName() != null) {
+                        if (event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6Hammer")) {
+
+                            if (!event.getPlayer().hasPermission("survivalminus.item.hammer")) {
+                                event.setCancelled(true);
+                                event.getPlayer().sendMessage("§cDieses OP-Item ist nur für Richter!");
+                                return;
+                            }
+
+                            Inventory inv = Bukkit.createInventory(null, 9 * 6, "§cRichter-Mute");
+                            Collection<? extends Player> online = Bukkit.getOnlinePlayers();
+                            for (int i = 0; i < online.size(); i++) {
+                                Player p = (Player) online.toArray()[i];
+                                ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
+                                SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+                                skullMeta.setDisplayName("§5" + p.getName());
+                                skullMeta.setOwningPlayer(p);
+                                skull.setItemMeta(skullMeta);
+                                inv.setItem(i, skull);
+                            }
+
+                            event.getPlayer().openInventory(inv);
+
+                        }
                     }
                 }
         }
