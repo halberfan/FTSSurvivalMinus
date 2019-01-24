@@ -3,6 +3,7 @@ package de.ftscraft.survivalminus.main;
 import de.ftscraft.ftssystem.main.FtsSystem;
 import de.ftscraft.survivalminus.commands.CMDchooseability;
 import de.ftscraft.survivalminus.commands.CMDgesundheit;
+import de.ftscraft.survivalminus.commands.CMDgivewater;
 import de.ftscraft.survivalminus.listeners.*;
 import de.ftscraft.survivalminus.user.User;
 import de.ftscraft.survivalminus.utils.ItemStacks;
@@ -42,6 +43,7 @@ public class Survival extends JavaPlugin {
     private void initCommands() {
         new CMDgesundheit(this);
         new CMDchooseability(this);
+        new CMDgivewater(this);
     }
 
     private void initUtils() {
@@ -100,5 +102,10 @@ public class Survival extends JavaPlugin {
 
     public FtsSystem getFts() {
         return fts;
+    }
+
+    public ItemStacks getItemStacks()
+    {
+        return itemStacks;
     }
 }

@@ -94,4 +94,8 @@ public class ItemStacks {
 
     }
 
+    public ItemStack getWater()
+    {
+        return water.clone();
+    }
 }

@@ -8,3 +8,4 @@ depend: [mcMMO]
 commands:
     gesundheit:
     chooseability:
+    givewater:
