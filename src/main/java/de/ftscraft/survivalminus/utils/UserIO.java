@@ -1,6 +1,5 @@
 package de.ftscraft.survivalminus.utils;
 
-import com.gmail.nossr50.datatypes.skills.SkillType;
 import de.ftscraft.survivalminus.main.Survival;
 import de.ftscraft.survivalminus.user.User;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -43,12 +42,10 @@ public class UserIO {
                 protein = cfg.getInt("health.protein"),
                 vitamin = cfg.getInt("health.vitamin");
 
-        long firstPlayed;
-        if (cfg.contains("player.firstTimePlayed"))
-            firstPlayed = cfg.getLong("player.firstTimePlayed");
-        else {
-            user.setFirstTimePlayed(System.currentTimeMillis());
-            firstPlayed = 0;
+        if (cfg.contains("player.firstTimePlayed")) {
+            user.setFirstTimePlayed(cfg.getLong("player.firstTimePlayed"));
+        } else {
+            user.setFirstTimePlayed(0);
         }
 
         List typeList = cfg.getList("skills");
@@ -60,10 +57,6 @@ public class UserIO {
         user.setKohlenhydrate(kohlenhydrate);
         user.setProteine(protein);
         user.setVitamine(vitamin);
-        if (firstPlayed != 0)
-            user.setFirstTimePlayed(firstPlayed);
-        if (types != null)
-            user.setSkills(types);
     }
 
     public void savePlayerData(User user) {
@@ -80,10 +73,6 @@ public class UserIO {
 
         List<String> b = new ArrayList<>();
 
-        if (!user.getAbility().values().isEmpty())
-            for (SkillType a : user.getAbility().values()) {
-                b.add(a.getName());
-            }
 
         cfg.set("skills", b.toArray());
 

@@ -25,12 +25,13 @@ public class TaskScheduler implements Runnable {
 
         if (timeSeconds == 40) {
             for (User a : plugin.getAllUser()) {
-                a.setSeconds_thirst(a.getSeconds_thirst() - 1);
-                a.checkAciveValues();
+                a.setSecondsDown(a.getSecondsDown() - 1);
+                a.checkActiveValues();
                 if(a.getPlayer().getGameMode() == GameMode.CREATIVE) {
                     a.setThirst(20);
                     a.setProteine(20);
                     a.setKohlenhydrate(20);
+                    a.setVitamine(20);
                 }
             }
             timeSeconds = 0;

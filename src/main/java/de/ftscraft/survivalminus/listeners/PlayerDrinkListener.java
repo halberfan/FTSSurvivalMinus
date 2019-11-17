@@ -3,9 +3,13 @@ package de.ftscraft.survivalminus.listeners;
 import de.ftscraft.survivalminus.main.Survival;
 import de.ftscraft.survivalminus.user.User;
 import de.ftscraft.survivalminus.utils.Food;
+import de.ftscraft.survivalminus.utils.Utils;
 import de.ftscraft.survivalminus.utils.Variables;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
@@ -23,26 +27,35 @@ public class PlayerDrinkListener implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onDrink(PlayerItemConsumeEvent event) {
         User u = plugin.getUser(event.getPlayer().getName());
-        if(event.getItem().getType() == Material.POTION){
+        if (event.getItem().getType() == Material.POTION) {
             ItemStack is = event.getItem();
             PotionMeta im = (PotionMeta) is.getItemMeta();
-            if(im.getBasePotionData().getType() == PotionType.WATER) {
-                if(im.getLore() == null) {
+            if (im.getBasePotionData().getType() == PotionType.WATER) {
+                if (im.getLore() == null) {
                     event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 3, 2));
                 } else {
                     u.setThirst(u.getThirst() + Variables.BOTTLE_THIRST);
-                    if(u.getThirst() > Variables.MAX_THIRST)
+                    if (u.getThirst() > Variables.MAX_THIRST)
                         u.setThirst(Variables.MAX_THIRST);
                 }
             }
+
+            int rdm = Utils.getRandomNumber(9, 0);
+            if (rdm == 0) {
+                Player p = event.getPlayer();
+                event.setItem(new ItemStack(Material.AIR));
+                p.playSound(p.getLocation(), Sound.ENTITY_SPLASH_POTION_BREAK, 1, 1);
+                p.sendMessage("§eDu hast deine Flasche fallen lassen! Sie ist in tausend Einzelteile zersprungen.");
+            }
+
         }
 
-        Food f = Food.getFoodByMaterial(event.getItem().getType());
+        Food f = Food.getFoodByMaterial(event.getItem());
 
-        if(f != null) {
+        if (f != null) {
             u.addValuesByFood(f);
         }
 

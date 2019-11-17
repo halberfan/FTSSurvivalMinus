@@ -21,20 +21,23 @@ public class BowListener implements Listener {
     public void onBow(EntityShootBowEvent event) {
         if(event.getEntity() instanceof Player) {
 
-            Player p = (Player)event.getEntity();
+            Player p = (Player) event.getEntity();
 
             PlayerInventory inv = p.getInventory();
 
-            if(inv.getItemInOffHand().getType() != Material.ARROW && inv.getItemInOffHand().getType() != Material.SPECTRAL_ARROW && inv.getItemInOffHand().getType() != Material.TIPPED_ARROW) {
-                event.getProjectile().remove();
+            if (p.getInventory().getItemInMainHand().getType() == Material.BOW ) {
 
-                p.sendMessage("§cDu musst den Pfeil in der Off-Hand haben!");
-            } else {
+                if (inv.getItemInOffHand().getType() != Material.ARROW && inv.getItemInOffHand().getType() != Material.SPECTRAL_ARROW && inv.getItemInOffHand().getType() != Material.TIPPED_ARROW) {
+                    event.getProjectile().remove();
 
-                event.getProjectile().setCustomName("§cSplashArrow");
+                    p.sendMessage("§cDu musst den Pfeil in der Off-Hand haben!");
+                } else {
+
+                    event.getProjectile().setCustomName("§cSplashArrow");
+
+                }
 
             }
-
         }
     }
 

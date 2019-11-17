@@ -11,8 +11,8 @@ public class Variables {
 
     //Durst, Ermüdigung, Gemütszustand, Kohlenhydrate, Proteine, Zucker, Fett, Salz
 
-    public static final int TIME_THIRST = 60 * 9,
-    DOWN = 1330;
+    public static final int TIME_DOWN = 60 * 9,
+            DOWN = 1400;
 
     public static final int BOTTLE_THIRST = 3;
 
@@ -21,7 +21,9 @@ public class Variables {
     public static final String password = "notch";
 
     public static final long MILLIS_TO_KOHLE = 1000 * 60 * 60 * 24 * 7,
-                             MILLIS_TO_PROTEIN = MILLIS_TO_KOHLE * 2,
-                             MILLIS_TO_FAT = MILLIS_TO_KOHLE * 3,
-                             MILLIS_TO_SALT = MILLIS_TO_KOHLE * 4;
+            MILLIS_TO_PROTEIN = MILLIS_TO_KOHLE * 2,
+            MILLIS_TO_FAT = MILLIS_TO_KOHLE * 3,
+            MILLIS_TO_SALT = MILLIS_TO_KOHLE * 4;
+
+    public static final String ITEM_UBERRESTE_NAME = "§cÜberreste";
 }

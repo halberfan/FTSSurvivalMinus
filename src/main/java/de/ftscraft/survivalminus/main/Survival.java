@@ -1,7 +1,9 @@
 package de.ftscraft.survivalminus.main;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import de.ftscraft.ftssystem.main.FtsSystem;
-import de.ftscraft.survivalminus.commands.CMDchooseability;
 import de.ftscraft.survivalminus.commands.CMDgesundheit;
 import de.ftscraft.survivalminus.commands.CMDgivewater;
 import de.ftscraft.survivalminus.listeners.*;
@@ -12,10 +14,13 @@ import de.ftscraft.survivalminus.utils.UserIO;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.TreeMap;
+import java.util.UUID;
 
 public class Survival extends JavaPlugin {
 
@@ -27,13 +32,16 @@ public class Survival extends JavaPlugin {
 
     private UserIO userIO;
 
+    ProtocolManager pm;
+
     @Override
     public void onEnable() {
         super.onEnable();
         initUtils();
         initListeners();
         initCommands();
-        for(Player a : Bukkit.getOnlinePlayers()) {
+        pm = ProtocolLibrary.getProtocolManager();
+        for (Player a : Bukkit.getOnlinePlayers()) {
             User u = new User(this, a);
             u.getData();
         }
@@ -42,7 +50,6 @@ public class Survival extends JavaPlugin {
 
     private void initCommands() {
         new CMDgesundheit(this);
-        new CMDchooseability(this);
         new CMDgivewater(this);
     }
 
@@ -56,6 +63,10 @@ public class Survival extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            getUser(onlinePlayer.getName()).saveData();
+            getUser(onlinePlayer.getName()).remove();
+        }
         super.onDisable();
     }
 
@@ -65,7 +76,6 @@ public class Survival extends JavaPlugin {
         //new PlayerInteractListener(this);
         new PlayerDrinkListener(this);
         new BowListener(this);
-        new McMMOListener(this);
         new PlayerDoThingsListener(this);
         new BlockLandListener(this);
         new ArrowLandListener(this);
@@ -77,7 +87,8 @@ public class Survival extends JavaPlugin {
     }
 
     public User getUser(String name) {
-        return user.get(name);
+        User t = user.get(name);
+        return t;
     }
 
     public User getUser(OfflinePlayer player) {
@@ -104,8 +115,8 @@ public class Survival extends JavaPlugin {
         return fts;
     }
 
-    public ItemStacks getItemStacks()
-    {
+    public ItemStacks getItemStacks() {
         return itemStacks;
     }
+
 }

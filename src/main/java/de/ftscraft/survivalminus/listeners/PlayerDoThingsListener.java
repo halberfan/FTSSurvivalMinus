@@ -1,6 +1,5 @@
 package de.ftscraft.survivalminus.listeners;
 
-import com.gmail.nossr50.datatypes.skills.SkillType;
 import de.ftscraft.survivalminus.main.Survival;
 import de.ftscraft.survivalminus.user.User;
 import org.bukkit.Material;
@@ -30,64 +29,9 @@ public class PlayerDoThingsListener implements Listener {
     @EventHandler
     public void onCraft(CraftItemEvent event) {
         User u = plugin.getUser(event.getWhoClicked().getName());
-        u.addToCount(1);
+        u.addToCount(70);
     }
 
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent event) {
-        User u = plugin.getUser(event.getPlayer().getName());
-        if (u.getAbility().get(0) != null) {
-            Material m = event.getBlock().getType();
-            if (m != null) {
-                if (u.getAbility().get(0) == SkillType.MINING) {
-                    if (m == Material.STONE) {
-                        u.addToCount(1);
-                    } else {
-                        u.addToCount(2);
-                    }
-                } else if (u.getAbility().get(0) == SkillType.WOODCUTTING) {
-                    boolean a = false;
-                    for(Material mat : Material.values()) {
-                        if (mat.toString().contains("WOOD")) {
-                            a = true;
-                            u.addToCount(1);
-                            break;
-                        }
-                    }
-                    if(!a)
-                        u.addToCount(2);
-                } else if(u.getAbility().get(0) == SkillType.MINING) {
-                    boolean a = false;
-                    for(Material mat : Material.values()) {
-                        if (mat.toString().contains("STONE")) {
-                            a = true;
-                            u.addToCount(1);
-                            break;
-                        }
-                    }
-                    if(!a)
-                        u.addToCount(2);
-                }
-            }
-        } else {u.addToCount(2);}
-        if (u.getState() == 1) {
-            if (u.getBlocksToBreak() != 0) {
-                u.setBlocksToBreak(u.getBlocksToBreak() - 1);
-                event.setCancelled(true);
-            } else if (u.getBlocksToBreak() == 0) {
-                event.setCancelled(false);
-                u.setBlocksToBreak(10);
-            }
-        } else if (u.getState() == 2) {
-            if (u.getBlocksToBreak() != 0) {
-                u.setBlocksToBreak(u.getBlocksToBreak() - 1);
-                event.setCancelled(true);
-            } else if (u.getBlocksToBreak() == 0) {
-                event.setCancelled(false);
-                u.setBlocksToBreak(20);
-            }
-        }
-    }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
@@ -96,9 +40,15 @@ public class PlayerDoThingsListener implements Listener {
     }
 
     @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        User u = plugin.getUser(event.getPlayer().getName());
+        u.addToCount(4);
+    }
+
+    @EventHandler
     public void onEnchanting(EnchantItemEvent event) {
         User u = plugin.getUser(event.getEnchanter().getName());
-        u.addToCount(2);
+        u.addToCount(100);
     }
 
     @EventHandler
@@ -134,17 +84,17 @@ public class PlayerDoThingsListener implements Listener {
 
 // I do not know if this is necessary
                             if (item1 != null && item2 != null) {
-                                int id1 = item1.getType().getId();
-                                int id2 = item2.getType().getId();
+                                Material id1 = item1.getType();
+                                Material id2 = item2.getType();
 
 // if the player is repairing something the ids will be the same
-                                if (id1 != 0 && id1 == id2) {
+                                if (id1 == id2) {
                                     // item in the result slot
                                     ItemStack item3 = e.getCurrentItem();
 
 // check if there is an item in the result slot
                                     if (item3 != null) {
-                                        u.addToCount(1);
+                                        u.addToCount(100);
                                     }
                                 }
                             }

@@ -1,6 +1,10 @@
 package de.ftscraft.survivalminus.listeners;
 
 import de.ftscraft.survivalminus.main.Survival;
+import de.ftscraft.survivalminus.user.User;
+import de.ftscraft.survivalminus.utils.Utils;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -18,21 +22,24 @@ public class PlayerCraftListener implements Listener {
     @EventHandler
     public void onCraft(CraftItemEvent event) {
         ItemStack result = event.getInventory().getResult();
-        if(result.getItemMeta().getDisplayName() != null) {
-            if(result.getItemMeta().getDisplayName().equalsIgnoreCase("§cDolch") || result.getItemMeta().getDisplayName().equalsIgnoreCase("§4Robe")) {
-                if(!event.getWhoClicked().hasPermission("survivalminus.item.dieb")) {
+        Player p = (Player) event.getWhoClicked();
+        if (result.getItemMeta().getDisplayName() != null) {
+            if (result.getItemMeta().getDisplayName().equalsIgnoreCase("§cDolch") || result.getItemMeta().getDisplayName().equalsIgnoreCase("§4Robe")) {
+                if (!event.getWhoClicked().hasPermission("survivalminus.item.dieb")) {
                     event.setCancelled(true);
                 }
-            } else if(result.getItemMeta().getDisplayName().equalsIgnoreCase("§6Hammer")) {
-                if(!event.getWhoClicked().hasPermission("survivalminus.item.hammer")) {
+            } else if (result.getItemMeta().getDisplayName().equalsIgnoreCase("§6Hammer")) {
+                if (!event.getWhoClicked().hasPermission("survivalminus.item.hammer")) {
                     event.setCancelled(true);
                 }
-            } else if(result.getItemMeta().getDisplayName().equalsIgnoreCase("§cAblassbrief")) {
-                if(!event.getWhoClicked().hasPermission("survivalminus.item.ablassbrief")) {
+            } else if (result.getItemMeta().getDisplayName().equalsIgnoreCase("§cAblassbrief")) {
+                if (!event.getWhoClicked().hasPermission("survivalminus.item.ablassbrief")) {
                     event.setCancelled(true);
                 }
             }
         }
+
+
     }
 
 }

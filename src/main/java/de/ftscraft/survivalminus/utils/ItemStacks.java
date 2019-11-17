@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
+import java.time.temporal.ValueRange;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -28,6 +29,7 @@ public class ItemStacks {
             robe = new ItemStack(Material.ELYTRA, 1),
             hammer = new ItemStack(Material.GOLDEN_AXE, 1),
             ablassbrief = new ItemStack(Material.PAPER, 1),
+            ueberreste = new ItemStack(Material.ROTTEN_FLESH, 1),
             water = new ItemStack(Material.POTION, 1);
 
     private void initItems() {
@@ -56,6 +58,10 @@ public class ItemStacks {
         ablassMeta.setDisplayName("§cAblassbrief");
         ablassMeta.setLore(Arrays.asList("§7Dieser Brief wurde vom Papst ausgestellt und vergibt einer Person eine Sünde"));
         ablassbrief.setItemMeta(ablassMeta);
+
+        ItemMeta ueberresteMeta = ueberreste.getItemMeta();
+        ueberresteMeta.setDisplayName(Variables.ITEM_UBERRESTE_NAME);
+        ueberreste.setItemMeta(ueberresteMeta);
     }
 
     private void initCrafting() {
@@ -91,6 +97,10 @@ public class ItemStacks {
         ablassr.setIngredient('B', Material.GOLD_NUGGET);
         ablassr.setIngredient('C', Material.PAPER);
         plugin.getServer().addRecipe(ablassr);
+
+        ShapelessRecipe ueberrester = new ShapelessRecipe(new NamespacedKey(plugin, "SurvivalMinus-UBERRESTE"), ueberreste);
+        ueberrester.addIngredient(9, Material.ROTTEN_FLESH);
+        plugin.getServer().addRecipe(ueberrester);
 
     }
 

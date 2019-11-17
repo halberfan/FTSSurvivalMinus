@@ -24,7 +24,7 @@ public class PlayerClickListener implements Listener {
 
         Inventory inv = event.getInventory();
 
-        if(inv.getName().equalsIgnoreCase("§cRichter-Mute")) {
+        if(event.getView().getTitle().equalsIgnoreCase("§cRichter-Mute")) {
             event.setCancelled(true);
             ItemStack item = event.getCurrentItem();
 
