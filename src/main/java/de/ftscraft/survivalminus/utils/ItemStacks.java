@@ -3,6 +3,7 @@ package de.ftscraft.survivalminus.utils;
 import de.ftscraft.survivalminus.main.Survival;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -26,7 +27,7 @@ public class ItemStacks {
     }
 
     private ItemStack shiv = new ItemStack(Material.IRON_SWORD),
-            robe = new ItemStack(Material.ELYTRA, 1),
+            robe = new ItemStack(Material.LEATHER_CHESTPLATE, 1),
             hammer = new ItemStack(Material.GOLDEN_AXE, 1),
             ablassbrief = new ItemStack(Material.PAPER, 1),
             ueberreste = new ItemStack(Material.ROTTEN_FLESH, 1),
@@ -37,6 +38,7 @@ public class ItemStacks {
         ItemMeta shivMeta = shiv.getItemMeta();
         shivMeta.setDisplayName("§cDolch");
         shivMeta.setLore(Arrays.asList("§7Töte einen Spieler ohne bemerkt zu werden!", "§7(Keine Todesnachricht im Chat)"));
+        shivMeta.addEnchant(Enchantment.VANISHING_CURSE, 1, true);
         shiv.setItemMeta(shivMeta);
 
         PotionMeta waterm = (PotionMeta) water.getItemMeta();
@@ -47,6 +49,7 @@ public class ItemStacks {
         ItemMeta robeMeta = robe.getItemMeta();
         robeMeta.setDisplayName("§4Robe");
         robeMeta.setLore(Arrays.asList("Diese Robe macht dich unsichtbar"));
+        robeMeta.addEnchant(Enchantment.VANISHING_CURSE, 1, true);
         robe.setItemMeta(robeMeta);
 
         ItemMeta hammerMeta = hammer.getItemMeta();
@@ -67,10 +70,12 @@ public class ItemStacks {
     private void initCrafting() {
 
         ShapedRecipe shivr = new ShapedRecipe(new NamespacedKey(plugin, "SurvivalMinus-SHIV"), shiv);
-        shivr.shape("CCC", "BAB", "CCC");
-        shivr.setIngredient('A', Material.WOODEN_SWORD);
-        shivr.setIngredient('B', Material.IRON_INGOT);
-        shivr.setIngredient('C', Material.IRON_BLOCK);
+        shivr.shape("AIA", "DDD", "ESE");
+        shivr.setIngredient('A', Material.AIR);
+        shivr.setIngredient('I', Material.IRON_SWORD);
+        shivr.setIngredient('D', Material.DIAMOND);
+        shivr.setIngredient('E', Material.EMERALD);
+        shivr.setIngredient('S', Material.STICK);
         plugin.getServer().addRecipe(shivr);
 
         ShapelessRecipe waterr = new ShapelessRecipe(new NamespacedKey(plugin, "SurvivalMinus-WATER"), water);
@@ -79,9 +84,10 @@ public class ItemStacks {
         plugin.getServer().addRecipe(waterr);
 
         ShapedRecipe rober = new ShapedRecipe(new NamespacedKey(plugin, "SurvivalMinus-ROBE"), robe);
-        rober.shape("EEE", "EYE", "EEE");
+        rober.shape("LEL", "WEW", "LEL");
         rober.setIngredient('E', Material.EMERALD);
-        rober.setIngredient('Y', Material.ELYTRA);
+        rober.setIngredient('L', Material.LEATHER);
+        rober.setIngredient('W', Material.WHITE_WOOL);
         plugin.getServer().addRecipe(rober);
 
         ShapedRecipe hammerr = new ShapedRecipe(new NamespacedKey(plugin, "SurvivalMinus-HAMMER"), hammer);

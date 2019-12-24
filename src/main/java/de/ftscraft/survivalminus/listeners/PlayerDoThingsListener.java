@@ -42,7 +42,7 @@ public class PlayerDoThingsListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         User u = plugin.getUser(event.getPlayer().getName());
-        u.addToCount(4);
+        u.addToCount(1);
     }
 
     @EventHandler

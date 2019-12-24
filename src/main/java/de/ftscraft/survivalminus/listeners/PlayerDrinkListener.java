@@ -43,8 +43,8 @@ public class PlayerDrinkListener implements Listener {
                 }
             }
 
-            int rdm = Utils.getRandomNumber(9, 0);
-            if (rdm == 0) {
+            int rdm = Utils.getRandomNumber(99, 0);
+            if (rdm == 0 && isItGereinigtesWater(event.getItem())) {
                 Player p = event.getPlayer();
                 event.setItem(new ItemStack(Material.AIR));
                 p.playSound(p.getLocation(), Sound.ENTITY_SPLASH_POTION_BREAK, 1, 1);
@@ -61,5 +61,15 @@ public class PlayerDrinkListener implements Listener {
 
     }
 
+
+    private boolean isItGereinigtesWater(ItemStack itemStack) {
+
+        if (itemStack.getItemMeta() != null)
+            if (itemStack.getItemMeta().getLore() != null)
+                return itemStack.getItemMeta().getLore().get(0).equalsIgnoreCase("§7Gereinigt");
+
+        return false;
+
+    }
 
 }

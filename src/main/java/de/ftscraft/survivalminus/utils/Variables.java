@@ -12,7 +12,7 @@ public class Variables {
     //Durst, Ermüdigung, Gemütszustand, Kohlenhydrate, Proteine, Zucker, Fett, Salz
 
     public static final int TIME_DOWN = 60 * 9,
-            DOWN = 1400;
+            DOWN = 1700;
 
     public static final int BOTTLE_THIRST = 3;
 
