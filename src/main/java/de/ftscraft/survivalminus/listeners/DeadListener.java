@@ -33,7 +33,7 @@ public class DeadListener implements Listener {
         }
 
         User user = plugin.getUser(killed);
-        user.fillAll();
+        //user.fillAll();
     }
 
 }

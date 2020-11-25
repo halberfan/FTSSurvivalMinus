@@ -57,10 +57,10 @@ public class User {
     public void setSecondsDown(int secondsDown) {
         this.secondsDown = secondsDown;
         if (secondsDown == 0) {
-            thirst = thirst - 1;
+            /*thirst = thirst - 1;
             proteine = proteine - 1;
             vitamine = vitamine - 1;
-            kohlenhydrathe = kohlenhydrathe - 1;
+            kohlenhydrathe = kohlenhydrathe - 1;*/
             this.secondsDown = Variables.TIME_DOWN;
         }
     }
@@ -159,7 +159,7 @@ public class User {
             }
         } else if (food == Food.SEETANG) {
 
-            switch (Utils.getRandomNumber(0, 2)) {
+            /*switch (Utils.getRandomNumber(0, 2)) {
                 case 0:
                     setVitamine(getVitamine() - 1);
                     break;
@@ -169,11 +169,11 @@ public class User {
                 case 2:
                     setProteine(getProteine() - 1);
                     break;
-            }
+            }*/
 
         }   else if (food == Food.KUERBIS_KUCHEN) {
 
-            switch (Utils.getRandomNumber(3, 0)) {
+            /*switch (Utils.getRandomNumber(3, 0)) {
                 case 0:
                     setVitamine(getVitamine() + 3);
                     break;
@@ -186,7 +186,7 @@ public class User {
                 case 3:
                     setThirst(getThirst() + 3);
                     break;
-            }
+            }*/
 
         } else if (food == Food.UBERRESTE) {
 

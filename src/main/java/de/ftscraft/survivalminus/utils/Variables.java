@@ -11,8 +11,8 @@ public class Variables {
 
     //Durst, Ermüdigung, Gemütszustand, Kohlenhydrate, Proteine, Zucker, Fett, Salz
 
-    public static final int TIME_DOWN = 60 * 9,
-            DOWN = 1700;
+    public static final int TIME_DOWN = 60 * 12,
+            DOWN = 800;
 
     public static final int BOTTLE_THIRST = 3;
 
@@ -25,5 +25,8 @@ public class Variables {
             MILLIS_TO_FAT = MILLIS_TO_KOHLE * 3,
             MILLIS_TO_SALT = MILLIS_TO_KOHLE * 4;
 
-    public static final String ITEM_UBERRESTE_NAME = "§cÜberreste";
+    public static final String ITEM_UBERRESTE_NAME = "§cÜberreste",
+            ITEM_SUSSERFISCH_NAME = "§bSüßer Fisch",
+            ITEM_MARMELADE_NAME = "§cMarmelade",
+            ITEM_HONIGMELONENSAFT_NAME = "§6Honigmelonensaft";
 }

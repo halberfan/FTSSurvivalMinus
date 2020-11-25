@@ -31,7 +31,10 @@ public class ItemStacks {
             hammer = new ItemStack(Material.GOLDEN_AXE, 1),
             ablassbrief = new ItemStack(Material.PAPER, 1),
             ueberreste = new ItemStack(Material.ROTTEN_FLESH, 1),
-            water = new ItemStack(Material.POTION, 1);
+            sweet_fish = new ItemStack(Material.COOKED_SALMON, 1),
+            honig_melonen_saft = new ItemStack(Material.HONEY_BOTTLE, 1),
+            marmelade = new ItemStack(Material.HONEY_BOTTLE, 1),
+            water = new ItemStack(Material.HONEY_BOTTLE, 1);
 
     private void initItems() {
 
@@ -41,8 +44,8 @@ public class ItemStacks {
         shivMeta.addEnchant(Enchantment.VANISHING_CURSE, 1, true);
         shiv.setItemMeta(shivMeta);
 
-        PotionMeta waterm = (PotionMeta) water.getItemMeta();
-        waterm.setBasePotionData(new PotionData(PotionType.WATER));
+        ItemMeta waterm = water.getItemMeta();
+        waterm.setDisplayName("§bGereinigtes Wasser");
         waterm.setLore(Collections.singletonList("§7Gereinigt"));
         water.setItemMeta(waterm);
 
@@ -65,6 +68,20 @@ public class ItemStacks {
         ItemMeta ueberresteMeta = ueberreste.getItemMeta();
         ueberresteMeta.setDisplayName(Variables.ITEM_UBERRESTE_NAME);
         ueberreste.setItemMeta(ueberresteMeta);
+
+        ItemMeta sweetFishMeta = sweet_fish.getItemMeta();
+        sweetFishMeta.setDisplayName(Variables.ITEM_SUSSERFISCH_NAME);
+        sweetFishMeta.setLore(Arrays.asList("§7Der duftet nach süßem Fisch," ,"§7vielleicht, weil es ein süßer Fisch ist!"));
+        sweet_fish.setItemMeta(sweetFishMeta);
+
+        ItemMeta honigSaftMeta = honig_melonen_saft.getItemMeta();
+        honigSaftMeta.setDisplayName(Variables.ITEM_HONIGMELONENSAFT_NAME);
+        honig_melonen_saft.setItemMeta(honigSaftMeta);
+
+        ItemMeta marmeladeMeta = marmelade.getItemMeta();
+        marmeladeMeta.setDisplayName(Variables.ITEM_MARMELADE_NAME);
+        marmelade.setItemMeta(marmeladeMeta);
+
     }
 
     private void initCrafting() {
@@ -103,6 +120,33 @@ public class ItemStacks {
         ablassr.setIngredient('B', Material.GOLD_NUGGET);
         ablassr.setIngredient('C', Material.PAPER);
         plugin.getServer().addRecipe(ablassr);
+
+        ShapedRecipe honigSaftR = new ShapedRecipe(new NamespacedKey(plugin, "SurvivalMinus-HONIGSAFT"), honig_melonen_saft);
+        honigSaftR.shape("MMM","HGH");
+        honigSaftR.setIngredient('M', Material.MELON_SLICE);
+        honigSaftR.setIngredient('H', Material.HONEYCOMB);
+        honigSaftR.setIngredient('G', Material.GLASS_BOTTLE);
+        //honigSaftR.setIngredient('A', Material.AIR);
+        plugin.getServer().addRecipe(honigSaftR);
+
+        ShapedRecipe marmeladeR = new ShapedRecipe(new NamespacedKey(plugin, "SurvivalMinus-MARMELADE"), marmelade);
+        marmeladeR.shape("BBB","BZB","AHA");
+        marmeladeR.setIngredient('B', Material.SWEET_BERRIES);
+        marmeladeR.setIngredient('Z', Material.SUGAR_CANE);
+        marmeladeR.setIngredient('H', Material.HONEY_BOTTLE);
+        marmeladeR.setIngredient('A', Material.AIR);
+        plugin.getServer().addRecipe(marmeladeR);
+
+        ShapelessRecipe sweetFishr = new ShapelessRecipe(new NamespacedKey(plugin, "SurvivalMinus-SUSSERFISCH"), sweet_fish);
+        sweetFishr.addIngredient(Material.COOKED_SALMON);
+        sweetFishr.addIngredient(Material.COOKED_COD);
+        sweetFishr.addIngredient(3, Material.SUGAR);
+        plugin.getServer().addRecipe(sweetFishr);
+
+        ShapelessRecipe cookie = new ShapelessRecipe(new NamespacedKey(plugin, "SurvivalMinus-COOKIE"), new ItemStack(Material.COOKIE, 1));
+        cookie.addIngredient(2, Material.WHEAT);
+        cookie.addIngredient(Material.COCOA_BEANS);
+        plugin.getServer().addRecipe(cookie);
 
         ShapelessRecipe ueberrester = new ShapelessRecipe(new NamespacedKey(plugin, "SurvivalMinus-UBERRESTE"), ueberreste);
         ueberrester.addIngredient(9, Material.ROTTEN_FLESH);

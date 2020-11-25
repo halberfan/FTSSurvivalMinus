@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -30,20 +31,15 @@ public class PlayerDrinkListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDrink(PlayerItemConsumeEvent event) {
         User u = plugin.getUser(event.getPlayer().getName());
-        if (event.getItem().getType() == Material.POTION) {
-            ItemStack is = event.getItem();
-            PotionMeta im = (PotionMeta) is.getItemMeta();
-            if (im.getBasePotionData().getType() == PotionType.WATER) {
-                if (im.getLore() == null) {
-                    event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 3, 2));
-                } else {
-                    u.setThirst(u.getThirst() + Variables.BOTTLE_THIRST);
-                    if (u.getThirst() > Variables.MAX_THIRST)
-                        u.setThirst(Variables.MAX_THIRST);
-                }
-            }
+        if (isItGereinigtesWater(event.getItem())) {
 
-            int rdm = Utils.getRandomNumber(99, 0);
+            u.setThirst(u.getThirst() + Variables.BOTTLE_THIRST);
+            if (u.getThirst() > Variables.MAX_THIRST)
+                u.setThirst(Variables.MAX_THIRST);
+
+
+
+            int rdm = Utils.getRandomNumber(49, 0);
             if (rdm == 0 && isItGereinigtesWater(event.getItem())) {
                 Player p = event.getPlayer();
                 event.setItem(new ItemStack(Material.AIR));
@@ -61,14 +57,22 @@ public class PlayerDrinkListener implements Listener {
 
     }
 
+    @EventHandler
+    public void onFoodChange(FoodLevelChangeEvent event) {
+
+        if(event.getItem() == null)
+            return;
+
+        if(isItGereinigtesWater(event.getItem())) {
+            event.setCancelled(true);
+        }
+
+    }
+
 
     private boolean isItGereinigtesWater(ItemStack itemStack) {
 
-        if (itemStack.getItemMeta() != null)
-            if (itemStack.getItemMeta().getLore() != null)
-                return itemStack.getItemMeta().getLore().get(0).equalsIgnoreCase("§7Gereinigt");
-
-        return false;
+        return itemStack.isSimilar(plugin.getItemStacks().getWater());
 
     }
 
