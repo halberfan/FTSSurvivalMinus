@@ -1,5 +1,5 @@
 name: FTSSurvival
-version: "1.3.1"
+version: "1.3.2"
 main: de.ftscraft.survivalminus.main.Survival
 author: halberfan
 api-version: "1.15"

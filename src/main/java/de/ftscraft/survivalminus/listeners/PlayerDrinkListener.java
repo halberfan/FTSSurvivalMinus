@@ -37,16 +37,6 @@ public class PlayerDrinkListener implements Listener {
             if (u.getThirst() > Variables.MAX_THIRST)
                 u.setThirst(Variables.MAX_THIRST);
 
-
-
-            int rdm = Utils.getRandomNumber(49, 0);
-            if (rdm == 0 && isItGereinigtesWater(event.getItem())) {
-                Player p = event.getPlayer();
-                event.setItem(new ItemStack(Material.AIR));
-                p.playSound(p.getLocation(), Sound.ENTITY_SPLASH_POTION_BREAK, 1, 1);
-                p.sendMessage("§eDu hast deine Flasche fallen lassen! Sie ist in tausend Einzelteile zersprungen.");
-            }
-
         }
 
         Food f = Food.getFoodByMaterial(event.getItem());
