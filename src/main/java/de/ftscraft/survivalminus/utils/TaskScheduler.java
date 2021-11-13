@@ -54,7 +54,7 @@ public class TaskScheduler implements Runnable {
             if (p.getInventory().getChestplate() != null && p.getInventory().getChestplate().getType() != Material.AIR) {
                 if (p.getInventory().getChestplate().getItemMeta().getDisplayName() != null) {
                     if (p.getInventory().getChestplate().getItemMeta().getDisplayName().equalsIgnoreCase("§4Robe")) {
-                        p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 3 * 20, 2), true);
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 3 * 20, 0), true);
                     }
                 }
             }

@@ -3,18 +3,17 @@ package de.ftscraft.survivalminus.utils;
 public class Variables {
 
     public static final int
-            MAX_THIRST = 20,
-            MAX_KOHLENHYDRATHE = 20,
-            MAX_PROTEIN = 20,
-            MAX_FAT = 20,
-            MAX_VITAMINE = 20;
+            MAX_THIRST = 100,
+            MAX_KOHLENHYDRATHE = 100,
+            MAX_PROTEIN = 100,
+            MAX_VITAMINE = 100;
 
     //Durst, Ermüdigung, Gemütszustand, Kohlenhydrate, Proteine, Zucker, Fett, Salz
 
     public static final int TIME_DOWN = 60 * 12,
             DOWN = 800;
 
-    public static final int BOTTLE_THIRST = 3;
+    public static final int BOTTLE_THIRST = 15;
 
     public static final int COOKIE_SPEED_TIME = 10;
 

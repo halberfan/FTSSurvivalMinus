@@ -29,26 +29,26 @@ public class PlayerDoThingsListener implements Listener {
     @EventHandler
     public void onCraft(CraftItemEvent event) {
         User u = plugin.getUser(event.getWhoClicked().getName());
-        u.addToCount(70);
+        u.addToCount(250);
     }
 
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         User u = plugin.getUser(event.getPlayer().getName());
-        u.addToCount(2);
+        u.addToCount(4);
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         User u = plugin.getUser(event.getPlayer().getName());
-        u.addToCount(1);
+        u.addToCount(5);
     }
 
     @EventHandler
     public void onEnchanting(EnchantItemEvent event) {
         User u = plugin.getUser(event.getEnchanter().getName());
-        u.addToCount(100);
+        u.addToCount(750);
     }
 
     @EventHandler
@@ -94,7 +94,7 @@ public class PlayerDoThingsListener implements Listener {
 
 // check if there is an item in the result slot
                                     if (item3 != null) {
-                                        u.addToCount(100);
+                                        u.addToCount(500);
                                     }
                                 }
                             }

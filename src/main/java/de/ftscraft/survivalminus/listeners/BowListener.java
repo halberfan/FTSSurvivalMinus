@@ -20,7 +20,6 @@ public class BowListener implements Listener {
     @EventHandler
     public void onBow(EntityShootBowEvent event) {
         if(event.getEntity() instanceof Player) {
-
             Player p = (Player) event.getEntity();
 
             PlayerInventory inv = p.getInventory();
